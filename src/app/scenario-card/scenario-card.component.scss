@@ -1,0 +1,45 @@
+::ng-deep .mde-popover-content{
+  margin-left: -50px;
+}
+
+.fa {
+  font-size: 25px;
+}
+.card {
+  border-radius: 10px;
+  border: 3px solid var(--color-amber-1);
+  transform: scale(0.9);
+}
+// .card:hover {
+//   transform: scale(1);
+// }
+.card-body {
+  padding: 0rem;
+}
+th,
+td {
+  text-align: center;
+}
+th:first-child,
+td:first-child {
+  border-right: 1px solid;
+}
+th {
+  // border-bottom: 1px solid;
+}
+.table td,
+.table th {
+  padding: 4px;
+}
+.shadows {
+  box-shadow: 10px 10px 5px 0px rgba(255, 255, 255, 0.5);
+}
+.pad-0 > tr>  td {
+  // font-size: 14x;
+  // padding: 4px;
+  padding-left: 0px;
+}
+.pad-0 > tr {
+  font-size: 13px;
+  height: 35px;
+}

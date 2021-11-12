@@ -1,0 +1,33 @@
+// :host {
+//   display: contents;
+// }
+// // app-simulate-summary-row {
+// //   visibility: hidden;
+// //   display: none;
+// // }
+td {
+  padding-right: 0px;
+  padding-left: 0px;
+  vertical-align: middle;
+  text-align: center;
+}
+.color-danger {
+  color: red;
+}
+.color-success {
+  color: green;
+}
+.color-danger::after{
+  font-family: "FontAwesome";
+  content: "\f063";  // both up and down
+  display: inline-block;
+  font-weight: 900; 
+  
+}
+.color-success::after{
+  font-family: "FontAwesome";
+  content: "\f062";  // both up and down
+  display: inline-block;
+  font-weight: 900; 
+  
+}

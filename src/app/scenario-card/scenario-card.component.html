@@ -1,0 +1,172 @@
+<mde-popover
+                      #appPopover="mdePopover"
+                      [mdePopoverOverlapTrigger]="false"
+                      mdePopoverLeaveDelay="1000"
+                    >
+                    <div class="card shadows">
+                      <div class="list-group">
+                        <button type="button" class="list-group-item list-group-item-action active">
+                          Retailers
+                        </button>
+                        <button type="button" class="list-group-item list-group-item-action">
+                          {{filter_used.retailerFilter}}
+                        </button>
+                      </div>
+                      <div class="list-group">
+                        <button type="button" class="list-group-item list-group-item-action active">
+                          Product Group
+                        </button>
+                        <button *ngFor="let product of filter_used.productFilter"
+                         type="button" class="list-group-item list-group-item-action">
+                          {{product}}
+                        </button>
+                      </div>
+                      <div class="list-group">
+                        <button type="button" class="list-group-item list-group-item-action active">
+                          Category
+                        </button>
+                        <button *ngFor="let category of filter_used.categoryFilter"
+                         type="button" class="list-group-item list-group-item-action">
+                          {{category}}
+                        </button>
+                      </div>      
+
+                       
+                    </div>
+                    </mde-popover>
+<div class="card shadows" 
+>
+  <div class="card-body">
+    <!-- <div class="clearfix">
+      <div class="float-right mr-2 mt-1">
+        <i
+          class="fa fa-window-close"
+          aria-hidden="true"
+          (click)="removeScenario(simulated.key)"
+        ></i>
+      </div>
+      <div class="float-right mr-5">
+        <h5>{{ simulated.key }}</h5>
+      </div>
+    </div> -->
+    <!-- [mdePopoverTriggerFor]="appPopover"
+mdePopoverTriggerOn="hover"
+
+#popoverTrigger="mdePopoverTrigger" -->
+    <div class="d-flex justify-content-end">
+      
+      <div class="mr-5">
+        <p>{{ simulated.key }} <i class="fa fa-info-circle" style="font-size: 15px;" aria-hidden="true"></i></p>
+      </div>
+      <div class="">
+        <i
+          class="fa fa-window-close"
+          aria-hidden="true"
+          (click)="removeScenario(simulated.key)"
+        ></i>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <table class="table table-borderless pad-0">
+        <tr style="font-size: 11px;">
+          <th style="vertical-align: middle;">ABS Change</th>
+          <th  style="vertical-align: middle;">% Change</th>
+        </tr>
+        <tr class="">
+          <td>{{ simulated.absolute_change.units |  convertTonnes  }}</td>
+          <td>
+            {{ simulated.percent_change.units |  convertTonnes  }} %
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ simulated.absolute_change.tonnes |  convertTonnes  }}
+          </td>
+          <td>
+            {{ simulated.percent_change.tonnes | number: decimalFormat }} %
+          </td>
+        </tr>
+        <tr>
+          <td>{{ simulated.absolute_change.lsv |  convertTonnes }}</td>
+          <td>{{ simulated.percent_change.lsv | number: decimalFormat }} %</td>
+        </tr>
+        <tr>
+          <td>{{ simulated.absolute_change.rsv |  convertTonnes }}</td>
+          <td>{{ simulated.percent_change.rsv | number: decimalFormat }} %</td>
+        </tr>
+        <tr>
+          <td>{{ simulated.absolute_change.nsv|  convertTonnes }}</td>
+          <td>{{ simulated.percent_change.nsv | number: decimalFormat }} %</td>
+        </tr>
+        <tr>
+          <td>
+            {{ simulated.absolute_change.nsv_tonnes |  convertTonnes }}
+          </td>
+          <td>
+            {{ simulated.percent_change.nsv_tonnes | number: decimalFormat }} %
+          </td>
+        </tr>
+        <tr>
+          <td>{{ simulated.absolute_change.te |  convertTonnes }}</td>
+          <td>{{ simulated.percent_change.te | number: decimalFormat }} %</td>
+        </tr>
+        <tr>
+          <td>
+            {{
+              simulated.absolute_change.te_percent_lsv |  convertTonnes
+            }}
+          </td>
+          <td>
+            {{
+              simulated.percent_change.te_percent_lsv | number: decimalFormat
+            }}
+            %
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ simulated.absolute_change.te_units |  convertTonnes }}
+          </td>
+          <td>
+            {{ simulated.percent_change.te_units | number: decimalFormat }} %
+          </td>
+        </tr>
+        <tr>
+          <td>{{ simulated.absolute_change.mac |  convertTonnes}}</td>
+          <td>{{ simulated.percent_change.mac | number: decimalFormat }} %</td>
+        </tr>
+        <tr>
+          <td>
+            {{
+              simulated.absolute_change.mac_percent_nsv |  convertTonnes
+            }}
+          </td>
+          <td>
+            {{
+              simulated.percent_change.mac_percent_nsv | number: decimalFormat
+            }}
+            %
+          </td>
+        </tr>
+        <tr>
+          <td>{{ simulated.absolute_change.rp |  convertTonnes }}</td>
+          <td>{{ simulated.percent_change.rp | number: decimalFormat }} %</td>
+        </tr>
+        <tr>
+          <td>
+            {{
+              simulated.absolute_change.rp_percent_rsv |  convertTonnes
+            }}
+          </td>
+          <td>
+            {{
+              simulated.percent_change.rp_percent_rsv | number: decimalFormat
+            }}
+            %
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

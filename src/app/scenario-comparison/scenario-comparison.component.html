@@ -1,0 +1,162 @@
+<div class="container-fluid">
+
+  <!-- <div class="row first-row p-3 m-2 cust">
+    <div
+      class="d-flex flex-row justify-content-around align-items-baseline"
+      style="width: 100%"
+    >
+      <div class="p-1">
+        <label for="sel1">Saved Scenario:</label>
+      </div>
+      <div class="p-1">
+        <select class="form-control select2" id="sel1">
+          <option>Select</option>
+          <option>Car</option>
+          <option>Bike</option>
+          <option>Scooter</option>
+          <option>Cycle</option>
+          <option>Horse</option>
+        </select>
+      </div>
+
+      <div class="p-1">
+        <a href="#" class="btn btn-primary"
+          ><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add to compare</a
+        >
+      </div>
+      <div class="flex-grow-1"></div>
+    </div>
+  </div> -->
+  <div
+    class="d-flex bd-highlight p-1 m-1 align-items-baseline cust"
+  >
+    <div class="p-1">
+      <label for="sel1">Saved Scenario:</label>
+    </div>
+    <div class="p-1">
+      <select
+        class="form-control select2"
+        id="sel1"
+        [(ngModel)]="selectedScenario"
+      >
+        <option value="">Select</option>
+        <option *ngFor="let c of scenarioArray" [ngValue]="c.id">
+          {{ c.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="p-1">
+      <a (click)="selectCompare()" class="btn btn-primary"
+        ><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add to compare</a
+      >
+    </div>
+    <div class="p-1 ml-auto align-self-stretch download">
+      <div>
+        <a (click)="downloadExcel()" class="btn"
+          ><i class="fa fa-download pr-1" aria-hidden="true"></i
+        ></a>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-lg-2 col-md-2">
+      <div class="card card-dark">
+        <div class="card-body">
+          <div class="d-flex justify-content-around reduce-opacity">
+      
+            <div class="">
+              <p>sfsdfsdfsd</p>
+            </div>
+            <div class="">
+              <i
+                class="fa fa-window-close"
+                aria-hidden="true"
+                
+              ></i>
+            </div>
+          </div>
+           
+          <div class="d-flex justify-content-end">
+            <table class="table table-borderless border-tr">
+              <tr class="reduce-opacity">
+                <th>ABS Change</th>
+              </tr>
+              <tr>
+                <td>Units</td>
+              </tr>
+              <tr>
+                <td>Tonnes</td>
+              </tr>
+              <tr>
+                <td>LSV</td>
+              </tr>
+              <tr>
+                <td>RSV</td>
+              </tr>
+              <tr>
+                <td>NSV</td>
+              </tr>
+              <tr>
+                <td>NSV/Tons</td>
+              </tr>
+              <tr>
+                <td>TE</td>
+              </tr>
+              <tr>
+                <td>TE, %LSV</td>
+              </tr>
+              <tr>
+                <td>TE/Unit</td>
+              </tr>
+              <tr>
+                <td>MAC</td>
+              </tr>
+              <tr>
+                <td>MAC,%NSV</td>
+              </tr>
+              <tr>
+                <td>RP</td>
+              </tr>
+              <tr>
+                <td>RP,%RSV</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let i of simulatedArray" class="col-lg-2 col-md-2">
+      <app-scenario-card
+      [filters]="scenarioArray"
+        [simulated]="i"
+        (removeEvent)="removeSce($event)"
+      ></app-scenario-card>
+    </div>
+    <div *ngFor="let i of selectComparearr" class="col-lg-2 col-md-2">
+      <div class="card card-text-card" style="height: 100%">
+        <div class="card-body">
+          <div class="card-text">
+            Select Scenarios from above and add it to filter
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="d-flex bd-highlight p-3 justify-content-end align-items-baseline neumorphic neumorphic--pressed"
+  >
+    <div class="p-1 mx-2">
+      <div>
+        <a routerLink="/scenario" class="btn btn-primary eq-size"> Input</a>
+      </div>
+    </div>
+
+    <div class="p-1 mx-2">
+      <div>
+        <a routerLink="/dashboard" class="btn btn-primary eq-size">Dashboard</a>
+      </div>
+    </div>
+  </div>
+</div>
