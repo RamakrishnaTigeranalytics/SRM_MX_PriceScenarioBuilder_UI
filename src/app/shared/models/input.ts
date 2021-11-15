@@ -2,7 +2,7 @@ import * as utils from "../utils/utils"
 export class SimulatedArray {
   key: string;
   cateory:Array<string>;
-  retailer:Array<string>;
+  retailer:any;
   current: SimulatedSummary;
   simulated: SimulatedSummary;
   absolute_change: SimulatedSummary;
