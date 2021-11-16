@@ -1267,7 +1267,7 @@ this.x12 = d3.scaleBand()
  }
 
   filterValue($event) {
-
+// debugger
     var multiSelectedValues = [];
     if($event.value.length > 1){
       for(var i=0;i<$event.value.length;i++ ){
@@ -1547,11 +1547,26 @@ this.x12 = d3.scaleBand()
        this.update(this.multiGetData(),this.x0,this.x1,this.y,this.g,this.height,this.width,this.z,this.svg,this.xAxisGroup,this.yAxisGroup,this.text1,this.text2,this.rect,this.legend)
        this.update2(this.multiGetDataVol(),this.x02,this.x12,this.y2,this.g2,this.height2,this.width2,this.z2,this.svg2,this.xAxisGroup2,this.yAxisGroup2,this.text12,this.text22,this.rect2,this.legend2)
 
-    }else{
-      this.simulated =this.totalSimulated.find(d=>$event.value.includes(d.key))
-      this.update(this.getData1(),this.x0,this.x1,this.y,this.g,this.height,this.width,this.z,this.svg,this.xAxisGroup,this.yAxisGroup,this.text1,this.text2,this.rect,this.legend)
-        this.update2(this.getData3(),this.x02,this.x12,this.y2,this.g2,this.height2,this.width2,this.z2,this.svg2,this.xAxisGroup2,this.yAxisGroup2,this.text12,this.text22,this.rect2,this.legend2)
     }
+    // else if($event.value.length == 0){
+    //   this.rawData()
+    //   this.update(this.getData1(),this.x0,this.x1,this.y,this.g,this.height,this.width,this.z,this.svg,this.xAxisGroup,this.yAxisGroup,this.text1,this.text2,this.rect,this.legend)
+    //     this.update2(this.getData3(),this.x02,this.x12,this.y2,this.g2,this.height2,this.width2,this.z2,this.svg2,this.xAxisGroup2,this.yAxisGroup2,this.text12,this.text22,this.rect2,this.legend2)
+    
+    // }
+    else{
+      if($event.value.length == 0){
+        this.rawData()
+        // this.update(this.getData1(),this.x0,this.x1,this.y,this.g,this.height,this.width,this.z,this.svg,this.xAxisGroup,this.yAxisGroup,this.text1,this.text2,this.rect,this.legend)
+          // this.update2(this.getData3(),this.x02,this.x12,this.y2,this.g2,this.height2,this.width2,this.z2,this.svg2,this.xAxisGroup2,this.yAxisGroup2,this.text12,this.text22,this.rect2,this.legend2)
+      
+      }else{
+        this.simulated =this.totalSimulated.find(d=>$event.value.includes(d.key))
+        this.update(this.getData1(),this.x0,this.x1,this.y,this.g,this.height,this.width,this.z,this.svg,this.xAxisGroup,this.yAxisGroup,this.text1,this.text2,this.rect,this.legend)
+          this.update2(this.getData3(),this.x02,this.x12,this.y2,this.g2,this.height2,this.width2,this.z2,this.svg2,this.xAxisGroup2,this.yAxisGroup2,this.text12,this.text22,this.rect2,this.legend2)
+      }
+      
+    } 
 
 
            
