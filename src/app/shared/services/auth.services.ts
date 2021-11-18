@@ -41,6 +41,15 @@ export class AuthService {
       headers: { skip: 'true' },
     });
   }
+  signUp(credentials) {
+    let formData: FormData = new FormData();
+    formData.append('name', credentials.name);
+    formData.append('email', credentials.email);
+    formData.append('password', credentials.password);
+    return this.http.post( environment.baseUrl+ '/api/user/create/', formData, {
+      headers: { skip: 'true' },
+    });
+  }
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user')

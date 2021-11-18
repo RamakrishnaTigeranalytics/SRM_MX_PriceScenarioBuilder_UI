@@ -26,13 +26,19 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     console.log('SERVICE CONSTRUCTOR');
-    this.getData();
-    // this.getScenarioMetrics().subscribe(data=>{
-    //   console.log(data , "METRIC DATA")
+    // this.getData().subscribe((res)=>{
+    //   console.log(res);
     // })
+    this.getData();
+
   }
   public getData()  {
-    // debugger;
+    // var httpHeaders = new HttpHeaders().set("Authorization","Token "+"193cb8aa113533fcbbc22e5ed14d5a88816ae8f6")
+    // return this.http.get(environment.baseUrl+ '/api/scenario/scenario-metrics/',{headers:httpHeaders});
+
+      
+      
+     
     let t1 : NewUnit[] = []
     ipdata['Sheet1'].forEach(data=>{
 
@@ -72,6 +78,7 @@ export class ApiService {
     return t1
      
   }
+
   public getScenarioMetrics(){
     return this.http.get(environment.baseUrl+ '/api/scenario/scenario-metrics/').pipe(
       map((data:any )=> {

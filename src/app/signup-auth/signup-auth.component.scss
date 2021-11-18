@@ -1,0 +1,60 @@
+#home-section {
+    // background-image: linear-gradient(
+    //   to right bottom,
+    //   var(--color-grey-light-1),
+    //   var(--color-grey-dark-3)
+    // );
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+  
+    background-image: url("../../assets/img/mars-background.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    /* position: relative; */
+  }
+  #home-section .dark-overlay {
+    // position: absolute;
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(244, 244, 244, 0.9);
+  
+    // background: rgba(241, 206, 6, 0.7);
+  }
+  #home-section .home-inner {
+    padding-top: 100px;
+  }
+  #home-section .card-form {
+    background-color: var(--color-amber-1);
+    opacity: 0.8;
+  }
+  #home-section .fa,
+  #create-section .fa {
+    color: var(--color-amber-1);
+    background: var(--color-grey-dark-1);
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .button
+  {
+    background-color: #808000;
+    color: whitesmoke;
+    width: 50%;
+    // border-radius: 15%;
+  }
+  .button:hover {
+    background-color: orangered !important;
+    color: whitesmoke;
+    // box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+  
+  p
+  {
+    font-family: Tahoma, Verdana, sans-serif;
+  }

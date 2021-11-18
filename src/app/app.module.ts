@@ -67,6 +67,7 @@ import { ScenarioInputYearlyComponent } from './scenario-input-yearly/scenario-i
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { SignupAuthComponent } from './signup-auth/signup-auth.component';
 
 
 
@@ -74,6 +75,10 @@ const routes: Routes = [
   {
     path: '',
     component: AuthComponent,
+  },
+  {
+    path:'signup',
+    component:SignupAuthComponent
   },
   {
     path: 'home',
@@ -202,7 +207,8 @@ const routes: Routes = [
     SimulateScenarioModalComponent,
     ScenarioYearPlanComponent,
     DropDownComponent,
-    ScenarioInputYearlyComponent
+    ScenarioInputYearlyComponent,
+    SignupAuthComponent
   ],
   imports: [
     CommonModule,

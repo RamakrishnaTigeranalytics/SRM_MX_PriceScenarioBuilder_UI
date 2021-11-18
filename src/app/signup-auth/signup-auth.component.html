@@ -1,0 +1,209 @@
+<header id="home-section">
+    <div class="dark-overlay">
+      <div class="home-inner container">
+        <div class="row">
+          <div class="col-lg-8 d-none d-lg-block">
+            <div class="d-flex flex-column">
+              <img
+                src="../../assets/img/mars_png.png"
+                class="img-circle"
+                alt="Cinque Terre"
+                height="160px"
+              />
+              <!-- <span
+                style="
+                  font-size: 3em;
+                  letter-spacing: 20px;
+                  color: var(--color-blue-1);
+                  font-weight: bold;
+                "
+                >MARS WRIGLEY</span
+              >
+              <span
+                style="
+                  font-size: 3em;
+                  letter-spacing: 15px;
+                  color: var(--color-amber-1);
+                  font-weight: bold;
+                "
+              >
+                Confectionary</span
+              > -->
+              <!-- <div class="p-4 align-self-start">
+                <i class="fa fa-check fa-2x"></i>
+              </div>
+              <div class="p-4 align-seld-end">Text description 1</div> -->
+            </div>
+            <p style="font-family: 'mars-extra-bold';">
+              <span style="font-size: 3em; display: block;">
+                MARS SRM MEXICO 
+                <!-- <p>RUSSIA</p> -->
+              </span>
+              <span style="font-size: 3em">Advanced Analytics Tool Kit </span>
+            </p>
+  
+            <!-- <div class="d-flex">
+              <div class="p-4 align-self-start">
+                <i class="fa fa-check fa-2x"></i>
+              </div>
+              <div class="p-4 align-seld-end">Text description 2</div>
+            </div>
+            <div class="d-flex">
+              <div class="p-4 align-self-start">
+                <i class="fa fa-check fa-2x"></i>
+              </div>
+              <div class="p-4 align-seld-end">Text description 3</div>
+            </div> -->
+          </div>
+          <div class="col-lg-4">
+            <div class="card text-center card-form neumorphic">
+              <div class="card-body">
+                <h3>SignUp</h3>
+                <p>Please SignUp to access Dashboard</p>
+                <div *ngIf="invalidLogin" class="alert alert-danger">
+                    {{errorMessage}}
+                </div>
+                 <form #f="ngForm" (ngSubmit)="signUp(f.value)">
+                    <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="validationTooltipUsernamePrepend">
+                              <!-- <i class="fa fa-user"></i> -->
+                              <i class="fa fa-user" style="padding-left: 8px;
+                              margin-left: 4px; background-color: orangered !important;
+                              color: white;"></i>
+                              <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            name="name"
+                            ngModel
+                            class="form-control form-control-lg"
+                            placeholder="Name"
+                          />
+                        </div>
+                      </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend">
+                          <i class="fa fa-envelope" style="background-color: orangered !important;
+                          color: white;"></i>
+                        </span>
+                      </div>
+                      <input type="email" name="email" ngModel class="form-control form-control-lg"
+                      placeholder="email" />
+                      <!-- <input
+                        type="email"
+                        name="email"
+                        ngModel
+                        class="form-control form-control-lg"
+                        placeholder="email"
+                      /> --> 
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend">
+                          <!-- <i class="fa fa-user"></i> -->
+                          <i class="fa fa-lock" style="padding-left: 8px;
+                          margin-left: 4px; background-color: orangered !important;
+                          color: white;"></i>
+                          <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        name="password"
+                        ngModel
+                        class="form-control form-control-lg"
+                        placeholder="password"
+                      />
+                    </div>
+                  </div>
+                 
+                  <input
+                    type="submit"
+                    value="Submit"
+                    class="btn btn-lg btn-secondary button"
+                  />
+                  <br>
+                  <br>
+                  <a [routerLink]="">Forgot password?</a>
+                  <hr>
+                   Already Have An Account? <a routerLink="">Sign In here</a>
+                  <hr>
+                  <!-- <p>SignIn With Your SocialMedia Accounts </p>
+                  <i class="fa fa-twitter-square fa-2x "></i>
+                  <i class="fa fa-facebook-square fa-2x" style="margin-left: 20px;"></i>
+                  <i class="fa fa-youtube-play fa-2x" style="margin-left: 20px;"></i> -->
+                  
+                </form> 
+               
+              <!-- below commented code belong to login form -->
+               <!-- <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        placeholder="username"
+                      />
+                    </div> -->
+                  <!-- <div class="row">
+                    <div class="input-group">
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                          <i class="fa fa-user"></i>
+                        </button>
+                      </span>
+                      <input
+                        class="form-control py-2"
+                        type="search"
+                        value="search"
+                        id="example-search-input"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-group">
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                          <i class="fa fa-key"></i>
+                        </button>
+                      </span>
+                      <input
+                        class="form-control py-2"
+                        type="search"
+                        value="search"
+                        id="example-search-input"
+                      />
+                    </div>
+                  </div> -->
+                   <!-- <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                          <i class="fa fa-key"></i>
+                        </button>
+                      </span> -->
+                     <!-- <div class="form-group">
+                      <input
+                        type="password"
+                        class="form-control form-control-lg"
+                        placeholder="confirm password"
+                      />
+                    </div> -->
+                    <!-- <form #loginForm=ngForm>
+                      <input type="text" placeholder="Enter name" class="form-control form-control-lg" ngModel name="username">
+                      <input type="password" placeholder="Enter password" class="form-control form-control-lg"
+                          ngModel name="password">
+                     
+                      <button type="submit" class="btn btn-outline-secondary" (click)="login(loginForm)">Login</button>
+                    </form> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  
