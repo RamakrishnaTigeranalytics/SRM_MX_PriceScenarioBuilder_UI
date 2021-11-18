@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   // baseUrl : 'http://localhost:8000',
-  baseUrl : 'https://srm-mexico-backend-analysis.azurewebsites.net',
+  baseUrl:"https://mars-web-app.azurewebsites.net",
+  // baseUrl : 'https://srm-mexico-backend-analysis.azurewebsites.net',
 
   powerBI: {
     reportBaseURL: 'https://app.powerbi.com/reportEmbed',
