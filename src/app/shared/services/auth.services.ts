@@ -63,4 +63,18 @@ export class AuthService {
     // let token = localStorage.getItem('token')
     return this.isLoggedInObservable.asObservable();
   }
+  forgotPassword(mailId){
+    let formData: FormData = new FormData();
+    formData.append('email', mailId.email);
+    return this.http.post( environment.baseUrl+ '/api/user/reset-password/', formData, {
+      headers: { skip: 'true' },
+    });
+  }
+  resetPass(cred){
+    var httpHeaders = new HttpHeaders().set("Authorization","Token "+localStorage.getItem("token"));
+    let formData: FormData = new FormData();
+    formData.append('new_password', cred.NewPassword);
+    formData.append('confirm_password', cred.ConformPassword);
+    return this.http.put( environment.baseUrl+ '/api/user/change-password/', formData, {headers:httpHeaders});
+  }
 }

@@ -200,6 +200,7 @@ fg
     takeUntil(this.unsubscribe$)
   )
     .subscribe(data=>{
+      // debugger
         if(data){
           this.units = data 
             this.init()
@@ -595,7 +596,7 @@ inc_per = Number(value)
            
           let form  = (this.myForm.get('inputFormArray') as FormArray).
           controls.find((d:FormGroup)=>d.controls.product_group.value == e.key)
-          
+      
          form.patchValue({
            
            tonnes : e.simulated.tonnes  - e.current.tonnes,
@@ -765,7 +766,7 @@ inc_per = Number(value)
     //   rsp_increase: val + 5,
     // })
     let val = 0 
-     debugger
+    //  debugger
      alert("hai")
     if(value == "Follows"){
       val = input.controls.net_elasticity.value
@@ -840,7 +841,7 @@ inc_per = Number(value)
           data.retailer,
           data.category,
           data.product_group,
-          data.mars_cogs_per_unit,
+          data.cogs,
           data.list_price,
           data.retailer_median_base_price_w_o_vat,
           data.base_price_elasticity,
@@ -852,10 +853,10 @@ inc_per = Number(value)
 
         // console.log(obj , "OBBBB")
         if (obj) {
+          // debugger
           this.simulatorInput.push(obj);
 
           let arr1 : FormArray = this.myForm.get('inputFormArray') as FormArray;
-          // debugger
           arr1.push(this.getFormGroup(obj));
           // let form =  this.getFormGroup(obj)
           // group[str] = form
@@ -912,7 +913,6 @@ inc_per = Number(value)
   // return true
   //   }
   private getFormGroup(obj: SimulatorInput) {
-
     return this.formBuilder.group({
         product_group: [obj.product_group],
       retailer: [obj.retailer],
@@ -965,7 +965,8 @@ inc_per = Number(value)
 
   populateSummary(units: NewUnit[], key) {
     // console.log(units , key , "SIMULATED AT}RRAY incoming units key")
-    
+      // debugger
+     // console.log(key+"////"+JSON.stringify(units))
     let total_base$ = of(...units).pipe(
       reduce((a, b) => a + Number(b.base_units.toFixed(2)),0)
       );
@@ -1004,7 +1005,7 @@ inc_per = Number(value)
     let total_rsv_new$ = of(...units).pipe(
       reduce((a, b) => a + b.total_rsv_w_o_vat_new, 0)
     );
-    let total_nsv$ = of(...units).pipe(reduce((a, b) => a + b.total_nsv, 0));
+    let total_nsv$ = of(...units).pipe(reduce((a, b) =>  a + b.total_nsv, 0));
     let total_nsv_new$ = of(...units).pipe(
       reduce((a, b) => a + b.total_nsv_new, 0)
     );
@@ -1113,8 +1114,9 @@ inc_per = Number(value)
           // console.log(SimulateSummary, 'FOR KEY SIMULATED SUMMARY');
           this.base_summary = baseSummary;
           this.simulated_summary = SimulateSummary;
+          var aaa = key;
           // let f = this.inputForm;
-          // debugger;
+         
           let sarr = new SimulatedArray(
             key,
           category,
@@ -1126,15 +1128,21 @@ inc_per = Number(value)
             baseSummary.get_percent_change(SimulateSummary)
           );
           // console.log(sarr, 'FOR KEY SIMULATED SUMMARY sarrrrrrr' );
-          // debugger
+            // debugger
           if (key != 'ALL') {
             let form  = (this.myForm.get('inputFormArray') as FormArray).
             controls.find((d:FormGroup)=>d.controls.product_group.value == key)
+            // debugger
+            console.log("rrrr cat" + sarr.key);
+            console.log("rrrrrrrrrrr  sim" +  sarr.simulated.nsv);
+            console.log("rrrrrr cur" + sarr.current.nsv)
             // let arr = this.myForm.get('inputFormArray') as FormArray
             // arr.controls.find(d=>d.controls.product_group.value == key)
             // arr.controls[0].value.product_group
+            // console.log(JSON.stringify(sarr));
             // debugger;
            form.patchValue({
+             
              tonnes:sarr.simulated.tonnes - sarr.current.tonnes,
               mac: sarr.simulated.mac - sarr.current.mac,
               te: sarr.simulated.te - sarr.current.te,
@@ -1170,14 +1178,62 @@ inc_per = Number(value)
       this.expandTable('expand');
     }
     this.isCHG = false;
-  
+    // let form = this.myForm.get('inputFormArray') as FormArray
+
+    // var sendData = {
+    //   products:[],
+    //   retailers:[]
+    // }
+    // for(var i=0;i<form.value.length;i++){
+    //   sendData.products.push(
+    //     {"retailer":form.value[i].retailer,
+    //       "account_name":form.value[i].retailer,
+    //       "product_group":form.value[i].product_group,
+    //       "list_price":form.value[i].current_lpi,
+    //       "inc_list_price": form.value[i].increased_lpi,
+    //       "cogs":form.value[i].current_cogs,
+    //       "inc_cogs":form.value[i].increased_cogs,
+    //       "elasticity":form.value[i].base_price_elasticity,
+    //       "net_elasticity":form.value[i].net_elasticity,
+    //       "inc_net_elasticity":0,
+    //       "inc_elasticity":0,
+    //       "rsp":form.value[i].rsv,
+    //       "promo_price":0,
+    //       "inc_promo_price":0,
+    //       "inc_rsp":form.value[i].increased_rsp,
+    //       "follow_competition":false,
+    //       "list_price_date":null,
+    //       "cogs_date":null,
+    //       "rsp_date":null,
+    //       "promo_date":null,
+    //       "disable_list_price":false,
+    //       "disable_cogs":false,
+    //       "disable_rsp":false,
+    //       "disable_elasticity":false,
+    //       "disable_promo":false,
+    //       "is_tpr_constant":false,
+    //       "avg_tpr":0
+    //     }
+    //   )
+    //   sendData.retailers.push({
+        
+    //       "account_name":form.value[i].retailer,
+    //       "product_group":form.value[i].product_group
+          
+    //   })
+    // }
+    // this.api.postData(sendData).subscribe((res)=>{
+    //   console.log(res);
+    // })
+    
     this.simulateSummary();
+
     
   }
 
   simulateSummary(el?: HTMLElement) {
     
-     
+    //  debugger
     this.simulatedArray = [];
     
     let form = this.myForm.get('inputFormArray') as FormArray
@@ -1193,7 +1249,7 @@ product_group.forEach((key, i) => result[key] = values[i]);
  
     product_group.unshift('ALL')
     
-     
+    //  console.log("units" + JSON.stringify(this.units)); // getting backend res
     let new_unit: NewUnit[] = this.priceScenarioService.updateSimulatedvalue(
       this.units,
   
@@ -1297,7 +1353,7 @@ product_group.forEach((key, i) => result[key] = values[i]);
     //   rsp_increase: val + 5,
     // })
     let val = 0 
-     debugger
+    //  debugger
      alert("hai")
     if(event.target.value == "Follows"){
       val = input.controls.net_elasticity.value

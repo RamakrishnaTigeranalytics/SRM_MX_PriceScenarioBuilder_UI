@@ -41,7 +41,15 @@ export function stringToParseConversion(str: string): number {
     return parseFloat(s);
   }
 }
+export function Nan(trade_expense){
+  // debugger
+  console.log("trade"+trade_expense);
+  if(Number.isNaN(trade_expense)){
+    return 0;
+    }
+    return trade_expense;
 
+}
 export function NanCheck(dividend, divisor) {
   if (!isFinite(dividend / divisor)) {
     return 0;

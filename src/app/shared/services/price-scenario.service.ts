@@ -47,10 +47,16 @@ export class PriceScenarioService {
     //   // this.newUnitChangeObservable.next(data)
     //   // this.initData.next(data)
     // })
-    let data = this.api.getData()
-       this.newUnitObservableSubject.next(data)
-       this.newUnitChangeObservable.next(data)
-       this.initData.next(data)
+    // let data = this.api.getData()
+    //    this.newUnitObservableSubject.next(data)
+    //    this.newUnitChangeObservable.next(data)
+    //    this.initData.next(data)
+
+       this.api.getData().subscribe((res)=>{
+       this.newUnitObservableSubject.next(res)
+       this.newUnitChangeObservable.next(res)
+       this.initData.next(res)
+      })
         
      
    }
@@ -218,7 +224,7 @@ export class PriceScenarioService {
 
       }
       public updateSimulatedvalue(unit: NewUnit[], form_dirty,arr, lpi?, rsp?, cogs?) {
-    
+      
         // console.log(lpi, rsp, cogs, 'DATES');
         // console.log(arr , "ARR")
         // let units: NewUnit[] = this.newUnitObservable.getValue();
@@ -241,6 +247,7 @@ export class PriceScenarioService {
         var cloned= []
     
         units.forEach((data) => {
+
           var clone = Object.create(data) as NewUnit
           // // {...data} as NewUnit
           // console.log(data , "ACTUAL DATA ")
@@ -248,6 +255,7 @@ export class PriceScenarioService {
           
           
           // for(const i in form){}
+         
           let val = this.isExists(arr,clone.product_group , clone.retailer)
           // console.log(val , "VAL LLLL")
           if (val) {

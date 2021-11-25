@@ -68,6 +68,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SignupAuthComponent } from './signup-auth/signup-auth.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -79,6 +81,14 @@ const routes: Routes = [
   {
     path:'signup',
     component:SignupAuthComponent
+  },
+  {
+    path:'forgot',
+    component:ForgotPasswordComponent
+  },
+  {
+    path:'resetpassword',
+    component:ResetPasswordComponent
   },
   {
     path: 'home',
@@ -208,7 +218,9 @@ const routes: Routes = [
     ScenarioYearPlanComponent,
     DropDownComponent,
     ScenarioInputYearlyComponent,
-    SignupAuthComponent
+    SignupAuthComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

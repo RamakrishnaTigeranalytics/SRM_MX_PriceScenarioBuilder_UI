@@ -27,86 +27,135 @@ export class ApiService {
   constructor(private http: HttpClient) {
     console.log('SERVICE CONSTRUCTOR');
     // this.getData().subscribe((res)=>{
-    //   console.log(res);
+    //   // console.log(res);
     // })
-    this.getData();
+    // this.getData();
 
   }
   public getData()  {
-    // var httpHeaders = new HttpHeaders().set("Authorization","Token "+"193cb8aa113533fcbbc22e5ed14d5a88816ae8f6")
-    // return this.http.get(environment.baseUrl+ '/api/scenario/scenario-metrics/',{headers:httpHeaders});
-
-      
-      
-     
-    let t1 : NewUnit[] = []
-    ipdata['Sheet1'].forEach(data=>{
-
+    var httpHeaders = new HttpHeaders().set("Authorization","Token "+localStorage.getItem("token"));
+    return this.http.get(environment.baseUrl+ '/api/scenario/scenario-metrics/',{headers:httpHeaders}).pipe(
+      map((res:any )=> {
+        // debugger
+  let t1  :NewUnit[] =[]
+    res.forEach(data=>{
+      // debugger
       t1.push(new NewUnit(
-        data['Category'],
-        data['Product Group'],
-        data['Retailer'],
-        data['Category'],
-        data['Product Group'],
-        data['Retailer'],
-        Utils.stringToParseConversion(data['Year']),
-        new Date(data['Date']),
+
+        data['corporate_segment'], //category,
+        data['ppg'],  // product_group,
+        data['retailer'], //   retailer,
+        data['brand_filter'], //brand_filter,
+        data['brand_format_filter'], // brand_format_filter,
+        data['strategic_cell_filter'], // strategic_cell_filter,
+        data['year'], //   year,
+        new Date(data['date']), // date
          
-        Utils.stringToParseConversion(data['%LPI']),
-        Utils.stringToParseConversion(data['% RSP Increase']),
-        Utils.stringToParseConversion(data['% COGS Increase']),
-        Number(data['Base Price Elasticity']),
-        data['Cross Elasticity'],
-        data['Net Elasticity'],
-        data['Competition'],
-        Utils.stringToParseConversion(data['Base Units'].replace(/,/g, '')),
-        Utils.stringToParseConversion(data['List Price'].replace(/,/g, '')),
-        Utils.stringToParseConversion(
-          data['Retailer Median Base Price'].replace(/,/g, '')
-        ),
-        Utils.stringToParseConversion(
-          data['Retailer Median Base Price  w\\o VAT'].replace(/,/g, '')
-        ),
-        Utils.stringToParseConversion(data['On Inv. %']),
-        Utils.stringToParseConversion(data['Off Inv. %']),
-        Utils.stringToParseConversion(data['TPR %']),
-        Utils.stringToParseConversion(data['GMAC%, LSV']),
-        Utils.stringToParseConversion(data['Product Group Weight (grams)'])
+        data['inc_list_price'], //lpi_percent,
+        data['inc_rsp'], //  rsp_increase_percent,
+        data['inc_cogs'], // cogs_increase_percent,
+        data['cogs'], // cogs,
+        Number(data['base_price_elasticity']), //base_price_elasticity,
+        data['cross_elasticity'], // cross_elasticity,
+        data['net_elasticity'], // net_elasticity,
+        data['competition'], //competition,
+        data['predicted_sales'], //  base_units,
+        data['list_price'], // list_price,
+        data['base_split'], //retailer_median_base_price,
+        data['retail_median_base_price_w_o_vat'], // retailer_median_base_price_w_o_vat,
+        data['on_inv'], // on_inv_percent,
+        data['off_inv'], //  off_inv_percent,
+        data['tpr_discount_byppg_x'], // tpr_percent,
+        data['gmac'], // gmac_percent_lsv,
+        data['product_weight_in_grams'] // product_group_weight_in_grams
+
+
        
       ));
     })
     return t1
+      })
+    )
+
+      
+      
+     
+    // let t1 : NewUnit[] = []
+    // ipdata['Sheet1'].forEach(data=>{
+    //   debugger
+    //   t1.push(new NewUnit(
+    //     data['Category'],
+    //     data['Product Group'],
+    //     data['Retailer'],
+    //     data['Category'],
+    //     data['Product Group'],
+    //     data['Retailer'],
+    //     Utils.stringToParseConversion(data['Year']),
+    //     new Date(data['Date']),
+         
+    //     Utils.stringToParseConversion(data['%LPI']),
+    //     Utils.stringToParseConversion(data['% RSP Increase']),
+    //     Utils.stringToParseConversion(data['% COGS Increase']),
+    //     Number(data['Base Price Elasticity']),
+    //     data['Cross Elasticity'],
+    //     data['Net Elasticity'],
+    //     data['Competition'],
+    //     Utils.stringToParseConversion(data['Base Units'].replace(/,/g, '')),
+    //     Utils.stringToParseConversion(data['List Price'].replace(/,/g, '')),
+    //     Utils.stringToParseConversion(
+    //       data['Retailer Median Base Price'].replace(/,/g, '')
+    //     ),
+    //     Utils.stringToParseConversion(
+    //       data['Retailer Median Base Price  w\\o VAT'].replace(/,/g, '')
+    //     ),
+    //     Utils.stringToParseConversion(data['On Inv. %']),
+    //     Utils.stringToParseConversion(data['Off Inv. %']),
+    //     Utils.stringToParseConversion(data['TPR %']),
+    //     Utils.stringToParseConversion(data['GMAC%, LSV']),
+    //     Utils.stringToParseConversion(data['Product Group Weight (grams)'])
+       
+    //   ));
+    // })
+    // return t1
      
   }
-
+public postData(sendData){
+ 
+  var httpHeaders = new HttpHeaders().set("Authorization","Token "+localStorage.getItem("token"));
+  return this.http.post(environment.baseUrl+ '/api/scenario/scenario-metrics/',sendData,{headers:httpHeaders}).pipe(
+    map((res:any )=> {
+      return res;
+    })
+    )
+}
   public getScenarioMetrics(){
-    return this.http.get(environment.baseUrl+ '/api/scenario/scenario-metrics/').pipe(
-      map((data:any )=> {
-        let t1 : NewUnit[] = []
+    // return this.http.get(environment.baseUrl+ '/api/scenario/scenario-metrics/').pipe(
+    //   map((data:any )=> {
+    //     let t1 : NewUnit[] = []
          
-        data.forEach(d=>{
-          t1.push(new NewUnit(
-            d.category,d.product_group,d.retailer,
-            d.brand_filter , d.brand_format_filter , d.strategic_cell_filter
-            ,d.year,new Date(d.date),0.0,0.0,0.0,Number(d.base_price_elasticity),
-            d.cross_elasticity ,d.net_elasticity ,'Not Follows' , 
-            Utils.stringToParseConversion(d.base_units.replace(/,/g, '')) ,
-            Utils.stringToParseConversion(d.list_price.replace(/,/g, '')),
-            Utils.stringToParseConversion(d.retailer_median_base_price.replace(/,/g, '')),
-            Utils.stringToParseConversion(d.retailer_median_base_price_w_o_vat.replace(/,/g, '')),
-            Utils.stringToParseConversion(d.on_inv_percent),Utils.stringToParseConversion(d.off_inv_percent),
-            Utils.stringToParseConversion(d.tpr_percent),Utils.stringToParseConversion(d.gmac_percent_lsv),
-            Utils.stringToParseConversion(d.product_group_weight)
+    //     data.forEach(d=>{
+    //       t1.push(new NewUnit(
+    //         d.category,d.product_group,d.retailer,
+    //         d.brand_filter , d.brand_format_filter , d.strategic_cell_filter
+    //         ,d.year,new Date(d.date),0.0,0.0,0.0,Number(d.base_price_elasticity),
+    //         d.cross_elasticity ,d.net_elasticity ,'Not Follows' , 
+    //         Utils.stringToParseConversion(d.base_units.replace(/,/g, '')) ,
+    //         Utils.stringToParseConversion(d.list_price.replace(/,/g, '')),
+    //         Utils.stringToParseConversion(d.retailer_median_base_price.replace(/,/g, '')),
+    //         Utils.stringToParseConversion(d.retailer_median_base_price_w_o_vat.replace(/,/g, '')),
+    //         Utils.stringToParseConversion(d.on_inv_percent),Utils.stringToParseConversion(d.off_inv_percent),
+    //         Utils.stringToParseConversion(d.tpr_percent),Utils.stringToParseConversion(d.gmac_percent_lsv),
+    //         Utils.stringToParseConversion(d.product_group_weight)
     
-            ))
+    //         ))
 
-        }) 
-        return t1 
-      }
+    //     }) 
+    //     return t1 
+    //   }
     
 
-        )
-    );
+    //     )
+    // );
 
   }
   private checkForChanges(obj) {
@@ -156,6 +205,7 @@ export class ApiService {
       formData
     );
   }
+  
 
   public getScenario(is_yearly='false') {
     // const yearly = 
@@ -217,5 +267,14 @@ export class ApiService {
       return r;
     });
     return t;
+  }
+  public scenarioList(){
+    var httpHeaders = new HttpHeaders().set("Authorization","Token "+"d6bbd54ca9e4e91fa56db7a632c7892f4651b624")
+    return this.http.get(environment.baseUrl+ '/api/scenario/promo-simulate-test/',{headers:httpHeaders}).pipe(
+      map((res:any )=> {
+        return res;
+      })
+    )
+
   }
   }
