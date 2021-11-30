@@ -42,7 +42,7 @@ export class ApiService {
       // debugger
       t1.push(new NewUnit(
 
-        data['Category_x'], //category,
+        data['category'], //category,
         data['ppg'],  // product_group,
         data['retailer'], //   retailer,
         data['brand_filter'], //brand_filter,
@@ -71,7 +71,7 @@ export class ApiService {
         data['cost_share'] ,
         data['fixed_cost'],
         data['volume_on_deal'],
-        data['Sub Brand_x'], //sub_brand,
+        data['sub_brand'], //sub_brand,
         data['corporate_segment'], //sub_segment,
         
 

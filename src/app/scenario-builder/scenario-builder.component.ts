@@ -200,6 +200,7 @@ export class ScenarioBuilderComponent implements OnInit {
       if(data && data.length > 0){
         let filtered = this.combination.filter(d=>data.includes(d.category))
        this.filteredRetailers.next([...new Set(filtered.map(d=>d.retailer))])
+       this.filtered_sub_segments.next([...new Set(filtered.map(d=>d.sub_segment))])
        this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
        this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
       }
