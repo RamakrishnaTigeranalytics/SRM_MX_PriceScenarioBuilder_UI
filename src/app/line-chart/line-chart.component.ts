@@ -290,6 +290,8 @@ retailer: {
   tableData$: Observable<NewUnit[]>;
   filters: any;
   units: NewUnit[];
+  selectedValue: any;
+ 
   constructor(private apiservice: ApiService,private priceScenarioService : PriceScenarioService) {
     //   this.width = 960 - this.margin.left - this.margin.right;
     //   this.height = 500 - this.margin.top - this.margin.bottom;
@@ -366,7 +368,7 @@ pipe(
       //   this.update(this.getData2(),x0,x1,y,g,height,width,z,svg,xAxisGroup,yAxisGroup,text1,text2,rect,legend)
       // },5000)
 
-  
+      this.selectedValue = this.dropChnages;
    
   }
  rawData(){

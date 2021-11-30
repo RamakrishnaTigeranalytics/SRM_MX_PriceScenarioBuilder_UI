@@ -42,7 +42,7 @@ export class ApiService {
       // debugger
       t1.push(new NewUnit(
 
-        data['corporate_segment'], //category,
+        data['Category_x'], //category,
         data['ppg'],  // product_group,
         data['retailer'], //   retailer,
         data['brand_filter'], //brand_filter,
@@ -67,7 +67,13 @@ export class ApiService {
         data['off_inv'], //  off_inv_percent,
         data['tpr_discount_byppg_x'], // tpr_percent,
         data['gmac'], // gmac_percent_lsv,
-        data['product_weight_in_grams'] // product_group_weight_in_grams
+        data['product_weight_in_grams'],// product_group_weight_in_grams
+        data['cost_share'] ,
+        data['fixed_cost'],
+        data['volume_on_deal'],
+        data['Sub Brand_x'], //sub_brand,
+        data['corporate_segment'], //sub_segment,
+        
 
 
        

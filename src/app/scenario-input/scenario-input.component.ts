@@ -1133,9 +1133,10 @@ inc_per = Number(value)
             let form  = (this.myForm.get('inputFormArray') as FormArray).
             controls.find((d:FormGroup)=>d.controls.product_group.value == key)
             // debugger
-            console.log("rrrr cat" + sarr.key);
-            console.log("rrrrrrrrrrr  sim" +  sarr.simulated.nsv);
-            console.log("rrrrrr cur" + sarr.current.nsv)
+            // console.log("after Simulation"+JSON.stringify(sarr));
+            // console.log("rrrr cat" + sarr.key);
+            // console.log("rrrrrrrrrrr  sim" +  sarr.simulated.nsv);
+            // console.log("rrrrrr cur" + sarr.current.nsv)
             // let arr = this.myForm.get('inputFormArray') as FormArray
             // arr.controls.find(d=>d.controls.product_group.value == key)
             // arr.controls[0].value.product_group

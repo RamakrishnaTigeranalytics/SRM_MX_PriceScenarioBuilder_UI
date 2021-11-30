@@ -93,7 +93,8 @@ export class PriceScenarioService {
         }
 
       }
-      public filterTableData(category , product , retailer ){
+      public filterTableData(category , product , retailer,brand ){
+        // debugger
         let units = this.initData.getValue()
        
         
@@ -107,6 +108,9 @@ export class PriceScenarioService {
         }
         if (retailer && retailer.length > 0) {
           units = units.filter((unit) => retailer.includes(unit.retailer));
+        }
+        if (brand && brand.length > 0) {
+          units = units.filter((unit) => brand.includes(unit.brand_filter));
         }
         // this.newUnitObservable.next(units);  
         console.log("setting null")

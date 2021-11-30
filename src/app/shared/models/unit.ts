@@ -195,6 +195,11 @@ export class UnitModel {
   gmac_percent_lsv: number;
   // @propertyMap("Product Group Weight (grams)")
   product_group_weight_in_grams: number;
+  cost_share:number;
+  fixed_cost:number;
+  volume_on_deal:number;
+  sub_brand : string;
+    sub_segment:string;
   // @propertyMap("Mars On-Invoice")
   mars_on_invoice: number; ////list_price * (on_inv_percent/100)
   // @propertyMap("Mars NSV")
@@ -278,7 +283,12 @@ export class UnitModel {
     off_inv_percent,
     tpr_percent,
     gmac_percent_lsv,
-    product_group_weight_in_grams
+    product_group_weight_in_grams,
+    cost_share,
+    fixed_cost,
+    volume_on_deal,
+    sub_brand,
+    sub_segment
     // ,mars_on_invoice,mars_nrv,tpr_budget,mars_net_invoice_price,
     // mars_off_invoice,mars_nsv,retailer_mark_up,gmac_lsv_per_unit,mars_cogs_per_unit,total_rsv,
     // total_rsv_w_o_vat,total_lsv,mars_total_on_invoice,mars_total_nrv,mars_total_net_invoice_price,
@@ -315,6 +325,7 @@ export class UnitModel {
     this.net_elasticity = net_elasticity;
 
     this.competition = competition;
+
     this.base_units = base_units;
 
     this.list_price = list_price;
@@ -332,6 +343,11 @@ export class UnitModel {
     this.gmac_percent_lsv = gmac_percent_lsv;
 
     this.product_group_weight_in_grams = product_group_weight_in_grams;
+    this.cost_share = cost_share;
+    this.fixed_cost = fixed_cost;
+    this.volume_on_deal = volume_on_deal;
+    this.sub_brand = sub_brand;
+    this.sub_segment = sub_segment
   }
 }
 
@@ -394,6 +410,8 @@ export class NewUnit extends UnitModel {
   mac_roi: number;
   lift: number;
   trade_expensesNan: number;
+  price: any;
+  res: number;
 
   constructor(
     category,
@@ -420,7 +438,12 @@ export class NewUnit extends UnitModel {
     off_inv_percent,
     tpr_percent,
     gmac_percent_lsv,
-    product_group_weight_in_grams
+    product_group_weight_in_grams,
+    cost_share,
+    fixed_cost,
+    volume_on_deal,
+    sub_brand,
+    sub_segment
     // mars_on_invoice,mars_nrv,tpr_budget,mars_net_invoice_price,
     // mars_off_invoice,mars_nsv,retailer_mark_up,gmac_lsv_per_unit,mars_cogs_per_unit,total_rsv,
     // total_rsv_w_o_vat,total_lsv,mars_total_on_invoice,mars_total_nrv,mars_total_net_invoice_price,
@@ -453,7 +476,13 @@ export class NewUnit extends UnitModel {
       off_inv_percent,
       tpr_percent,
       gmac_percent_lsv,
-      product_group_weight_in_grams
+      product_group_weight_in_grams,
+      cost_share,
+      fixed_cost,
+      volume_on_deal,
+      sub_brand,
+    sub_segment
+      
       // mars_on_invoice,mars_nrv,tpr_budget,mars_net_invoice_price,
       // mars_off_invoice,mars_nsv,retailer_mark_up,gmac_lsv_per_unit,mars_cogs_per_unit,total_rsv,
       // total_rsv_w_o_vat,total_lsv,mars_total_on_invoice,mars_total_nrv,mars_total_net_invoice_price,
@@ -503,9 +532,9 @@ export class NewUnit extends UnitModel {
 
     this.total_rsv_w_o_vat =
       this.base_units * this.retailer_median_base_price_w_o_vat;
-      console.log("tpr")
+     
       if(this.tpr_percent !== 0){
-        this.promo_asp =   this.retailer_median_base_price_w_o_vat * this.tpr_percent ;
+        this.promo_asp =   (this.retailer_median_base_price_w_o_vat * this.tpr_percent) / 100;
       }else{
         this.promo_asp = this.retailer_median_base_price_w_o_vat;
       }
@@ -532,7 +561,8 @@ export class NewUnit extends UnitModel {
     this.trade_expense =
       (this.retailer_median_base_price_w_o_vat -
       this.promo_asp) *
-      (this.base_units);
+      (this.base_units) 
+      //* this.cost_share * this.volume_on_deal + this.fixed_cost;
     // this.trade_expense = Utils.Nan( this.promo_asp);
 
     this.total_nsv =
@@ -565,20 +595,34 @@ export class NewUnit extends UnitModel {
       ) * 100;
     this.suggested_retailer_median_base_price_w_o_vat =
       this.retailer_median_base_price_w_o_vat * (1 + this.rsp_increase_percent);
-    this.new_base_units =
-      this.competition == 'Follows'
-        ? this.base_units *
-          (1 +
-            this.net_elasticity *
-              ((this.suggested_retailer_median_base_price_w_o_vat -
-                this.retailer_median_base_price_w_o_vat) /
-                this.retailer_median_base_price_w_o_vat))
-        : this.base_units *
-          (1 +
-            this.base_price_elasticity *
-              ((this.suggested_retailer_median_base_price_w_o_vat -
-                this.retailer_median_base_price_w_o_vat) /
-                this.retailer_median_base_price_w_o_vat));
+
+    // this.new_base_units = 
+//     this.price =Math.pow(Math.round((1+(Math.round(this.suggested_retailer_median_base_price_w_o_vat) - Math.round(this.retailer_median_base_price_w_o_vat))/Math.round(this.retailer_median_base_price_w_o_vat))) , this.base_price_elasticity)
+// // discount = math.exp(tpr_coefficient * (new_tpr - old_tpr))
+//     this.res = Math.round(this.base_units) * this.price;
+    if(this.rsp_increase_percent !== 0){
+      this.price =Math.pow((1+((this.suggested_retailer_median_base_price_w_o_vat) - (this.retailer_median_base_price_w_o_vat))/(this.retailer_median_base_price_w_o_vat)) , this.base_price_elasticity);
+          // discount = math.exp(tpr_coefficient * (new_tpr - old_tpr))
+      this.new_base_units = Math.round(this.base_units) * this.price;
+       
+        }else{
+      this.new_base_units = this.base_units;
+        }
+
+
+      // this.competition == 'Follows'
+      //   ? this.base_units *
+      //     (1 +
+      //       this.net_elasticity *
+      //         ((this.suggested_retailer_median_base_price_w_o_vat -
+      //           this.retailer_median_base_price_w_o_vat) /
+      //           this.retailer_median_base_price_w_o_vat))
+      //   : this.base_units *
+      //     (1 +
+      //       this.base_price_elasticity *
+      //         ((this.suggested_retailer_median_base_price_w_o_vat -
+      //           this.retailer_median_base_price_w_o_vat) /
+      //           this.retailer_median_base_price_w_o_vat));
 
     // parseFloat(this.total_rsv_w_o_vat) * parseFloat(this.trade_expense);
     this.suggested_list_price = this.list_price * (1 + this.lpi_percent);
@@ -608,6 +652,7 @@ export class NewUnit extends UnitModel {
       this.new_base_units * this.suggested_retailer_median_base_price_w_o_vat;
       
     this.total_lsv_new = this.new_base_units * this.suggested_list_price;
+    
     this.mars_total_on_invoice_new =
       (this.on_inv_percent_new / 100) * this.total_lsv_new;
     this.mars_total_nrv_new =
@@ -621,7 +666,8 @@ export class NewUnit extends UnitModel {
     this.trade_expense_new =
       (this.suggested_retailer_median_base_price_w_o_vat -
       this.promo_asp) *
-      (this.new_base_units);
+      (this.new_base_units)
+      //*this.cost_share * this.volume_on_deal + this.fixed_cost;
 
     this.total_nsv_new =
       this.total_lsv_new -

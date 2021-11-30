@@ -68,6 +68,21 @@ export class ScenarioBuilderComponent implements OnInit {
   public filteredCategories : ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   public categoriesFilterCtrl: FormControl = new FormControl('');
 
+  brands_filter = [];
+  brands = new FormControl();
+  public filteredbrands : ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  public brandsFilterCtrl: FormControl = new FormControl('');
+
+  sub_brands_filter = [];
+  subBrands = new FormControl();
+  public filtered_sub_brands : ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  public sub_brandsFilterCtrl: FormControl = new FormControl('');
+
+  sub_segments_filter = [];
+  sub_segments = new FormControl();
+  public filtered_sub_segments : ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  public sub_segmentsFilterCtrl: FormControl = new FormControl('');
+
   simulateFlag$ = new BehaviorSubject<boolean>(false);
   simulate;
   isSimulate = false;
@@ -106,7 +121,7 @@ export class ScenarioBuilderComponent implements OnInit {
   categoryFilterSubject = new BehaviorSubject([]);
   productFilterSubject = new BehaviorSubject([]);
   retailerFilterSubject = new BehaviorSubject([]);
-
+  brandFilterSubject = new BehaviorSubject([]);
   inputList: string[];
   // categories_filter = [];
   // retailer_filter = [];
@@ -127,6 +142,7 @@ export class ScenarioBuilderComponent implements OnInit {
   simulatorInput: SimulatorInput[] = new Array();
   simulatedArray: SimulatedArray[] = new Array();
   inputForm: FormGroup;
+  // brand_filter: any[];
 
   
   // units: NewUnit[];
@@ -151,6 +167,7 @@ export class ScenarioBuilderComponent implements OnInit {
   ngOnInit(): void {
     
     this.retailers.valueChanges.subscribe(data=>{
+      // debugger
       console.log(this.combination , "COMBINATON")
       console.log(data , " RETAILERS ")
     //  let cat =  this.categories.value
@@ -160,19 +177,48 @@ export class ScenarioBuilderComponent implements OnInit {
       if(data && data.length > 0){
         let filtered = this.combination.filter(d=>data.includes(d.retailer))
        this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
+       this.filtered_sub_segments.next([...new Set(filtered.map(d=>d.sub_segment))])
        this.filteredCategories.next([...new Set(filtered.map(d=>d.category))])
+      // this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
       }
       console.log(this.filteredProducts , " filtered products ")
       console.log(this.filteredCategories , " filtered categories ")
       // console.log()
     })
+    this.sub_segments.valueChanges.subscribe(data=>{
+
+      if(data && data.length > 0){
+        let filtered = this.combination.filter(d=>data.includes(d.sub_segment))
+       this.filteredRetailers.next([...new Set(filtered.map(d=>d.retailer))])
+       this.filteredCategories.next([...new Set(filtered.map(d=>d.category))])
+       this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
+       this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
+      }
+    })
     this.categories.valueChanges.subscribe(data=>{
-      console.log(data , " CATEGORIES ")
-      console.log(this.combination , "COMBINATON")
+
       if(data && data.length > 0){
         let filtered = this.combination.filter(d=>data.includes(d.category))
        this.filteredRetailers.next([...new Set(filtered.map(d=>d.retailer))])
        this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
+       this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
+      }
+    })
+    this.brands.valueChanges.subscribe(data=>{
+
+      if(data && data.length > 0){
+        let filtered = this.combination.filter(d=>data.includes(d.brand_filter))
+       this.filtered_sub_brands.next([...new Set(filtered.map(d=>d.sub_brand))])
+       this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
+       this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
+      }
+    })
+    this.subBrands.valueChanges.subscribe(data=>{
+
+      if(data && data.length > 0){
+        let filtered = this.combination.filter(d=>data.includes(d.sub_brand))
+       this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
+      //  this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
       }
     })
     // this.products.valueChanges.subscribe(data=>{
@@ -356,9 +402,13 @@ export class ScenarioBuilderComponent implements OnInit {
   // }
 
   populateFilter(datas) {
+    // debugger
     this.retailer_filter = []
     this.categories_filter = []    
     this.product_filter = []
+    this.brands_filter = []
+    this.sub_brands_filter = []
+    this.sub_segments_filter = []
     of(...datas)
       .pipe(distinct((unit: NewUnit) => unit.retailer))
       .subscribe((data) => {
@@ -374,6 +424,7 @@ export class ScenarioBuilderComponent implements OnInit {
       of(...datas)
       .pipe(distinct((unit: NewUnit) => unit.category))
       .subscribe((data) => {
+      //  debugger
         this.categories_filter.push(data.category);
         this.filteredCategories.next(this.categories_filter)
       });
@@ -387,7 +438,28 @@ export class ScenarioBuilderComponent implements OnInit {
       });
 
       of(...datas)
-      .pipe(distinct((unit: NewUnit) => unit.retailer+"-"+unit.product_group+"-"+unit.category))
+      .pipe(distinct((unit: NewUnit) => unit.brand_filter))
+      .subscribe((data) => {
+        this.brands_filter.push(data.brand_filter);
+        this.filteredbrands.next(this.brands_filter);
+      });
+
+      of(...datas)
+      .pipe(distinct((unit: NewUnit) => unit.sub_segment))
+      .subscribe((data) => {
+        this.sub_segments_filter.push(data.sub_segment);
+        this.filtered_sub_segments.next(this.sub_segments_filter);
+      });
+
+      of(...datas)
+      .pipe(distinct((unit: NewUnit) => unit.sub_brand))
+      .subscribe((data) => {
+        this.sub_brands_filter.push(data.sub_brand);
+        this.filtered_sub_brands.next(this.sub_brands_filter);
+      });
+
+      of(...datas)
+      .pipe(distinct((unit: NewUnit) => unit.retailer+"-"+unit.product_group+"-"+unit.category+"-"+unit.brand_filter+"-"+unit.sub_brand+"-"+unit.sub_segment))
       .subscribe((data) => {
         this.combination.push(data)
          
@@ -418,11 +490,17 @@ export class ScenarioBuilderComponent implements OnInit {
     // console.log('CLICKED');
   }
   applyFilter() {
+    // debugger
     if (this.categories.value && this.categories.value.includes('ALL')) {
    this.categoryFilterSubject.next(this.categories_filter);
  } else {
    this.categoryFilterSubject.next(this.categories.value);
  }
+ if (this.brands.value && this.brands.value.includes('ALL')) {
+  this.brandFilterSubject.next(this.brands_filter);
+} else {
+  this.brandFilterSubject.next(this.brands.value);
+}
  if (this.retailers.value && this.retailers.value.includes('ALL')) {
    this.retailerFilterSubject.next(this.retailer_filter);
  } else {
@@ -449,6 +527,7 @@ export class ScenarioBuilderComponent implements OnInit {
  this.priceScenario.filterTableData(this.categoryFilterSubject.getValue(),
  this.productFilterSubject.getValue() ,
  this.retailerFilterSubject.getValue(),
+ this.brandFilterSubject.getValue(),
 // this.value
  )
 // debugger;
@@ -487,15 +566,22 @@ export class ScenarioBuilderComponent implements OnInit {
 //    });
 }
 resetFilter() {
+  // debugger
   console.log(this.product_filter , "product filter")
   console.log(this.productsFilterCtrl.value , "product filter value")
   console.log(this.products , "products ")
  this.categories.reset();
  this.retailers.reset();
  this.products.reset();
+ this.brands.reset();
+ this.subBrands.reset();
+ this.sub_segments.reset();
  this.filteredProducts.next(this.product_filter)
  this.filteredRetailers.next(this.retailer_filter)
  this.filteredCategories.next(this.categories_filter)
+ this.filteredbrands.next(this.brands_filter)
+ this.filtered_sub_brands.next(this.sub_brands_filter)
+ this.filtered_sub_segments.next(this.sub_segments_filter)
  this.applyFilter();
 }
   // applyFilter() {

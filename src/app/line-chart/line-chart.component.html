@@ -6,12 +6,15 @@
   <div class="custom-drop " >
     <mat-form-field appearance="fill" >
       <mat-label >Select Option</mat-label>
-      <mat-select  [formControl]="products"  multiple (selectionChange)="filterValue($event)">
+      <mat-select  [formControl]="products" multiple [(ngModel)]="selectedValue"  (selectionChange)="filterValue($event)">
         <span >
-          
+          <app-select-check-all [model]="products" 
+          [values]="dropChnages">
+</app-select-check-all>
           <mat-option 
             *ngFor="let product of dropChnages"
-            [value]="product"   
+            [value]="product" 
+              
             >
             {{ product }} 
           </mat-option>

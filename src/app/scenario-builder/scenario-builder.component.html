@@ -67,6 +67,27 @@
 
           <div class="custom-drop">
             <mat-form-field appearance="fill">
+              <mat-label>Subsegment</mat-label>
+              <mat-select [formControl]="sub_segments" class="downarrow">
+                <mat-option>
+                  <ngx-mat-select-search
+                  placeholderLabel="Search subsegments" 
+                   [formControl]="sub_segmentsFilterCtrl"></ngx-mat-select-search>
+                </mat-option>
+                <app-select-check-all [model]="sub_segments" 
+                [values]="filtered_sub_segments | async">
+</app-select-check-all>
+                <mat-option 
+                *ngFor="let subsegment of filtered_sub_segments | async"
+                [value]="subsegment"
+                >{{ subsegment }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> 
+
+          
+          <div class="custom-drop">
+            <mat-form-field appearance="fill">
               <mat-label>Category</mat-label>
               <mat-select [formControl]="categories" class="downarrow">
                 <mat-option>
@@ -84,8 +105,9 @@
               </mat-select>
             </mat-form-field>
           </div>
-<!-- 
-          <div class="custom-drop">
+
+
+          <!-- <div class="custom-drop">
             <mat-form-field appearance="fill" >
               <mat-label>Strategic Cell</mat-label>
               <mat-select [formControl]="categories" multiple>
@@ -102,37 +124,49 @@
           </div> -->
          
           <div class="custom-drop">
-            <mat-form-field appearance="fill">
-              <mat-label>Brand</mat-label>
-              <mat-select [formControl]="categories" multiple class="downarrow">
-                <mat-option class="downarrow">
+            <mat-form-field appearance="fill" class="medium">
+              <mat-label>Brand
+              </mat-label>
+              <mat-select [formControl]="brands" >
+                <mat-option>
                   <ngx-mat-select-search
-                  placeholderLabel="Search Categories" 
-                   [formControl]="categoriesFilterCtrl"></ngx-mat-select-search>
+                  placeholderLabel="Search Brands" 
+                   [formControl]="brandsFilterCtrl"></ngx-mat-select-search>
                 </mat-option>
-                <app-select-check-all [model]="categories" 
-                [values]="filteredCategories | async">
+                <app-select-check-all [model]="brands" 
+                [values]="filteredbrands | async">
 </app-select-check-all>
+                <mat-option
+                  *ngFor="let brand of filteredbrands | async"
+                  [value]="brand"
+                  >{{ brand }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>
 
           <div class="custom-drop">
-            <mat-form-field appearance="fill">
-              <mat-label>Sub Brand</mat-label>
-              <mat-select [formControl]="categories" multiple>
+            <mat-form-field appearance="fill" >
+              <mat-label>SubBrand
+              </mat-label>
+              <mat-select [formControl]="subBrands" >
                 <mat-option>
                   <ngx-mat-select-search
-                  placeholderLabel="Search Categories" 
-                   [formControl]="categoriesFilterCtrl"></ngx-mat-select-search>
+                  placeholderLabel="Search Subbrands" 
+                   [formControl]="sub_brandsFilterCtrl"></ngx-mat-select-search>
                 </mat-option>
-                
+                <app-select-check-all [model]="subBrands" 
+                [values]="filtered_sub_brands | async">
+</app-select-check-all>
                 <mat-option
-               
-                ></mat-option>
+                  *ngFor="let subbrand of filtered_sub_brands | async"
+                  [value]="subbrand"
+                  >{{ subbrand }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>
+
           <div class="custom-drop">
             <mat-form-field appearance="fill">
               <mat-label>Product Group</mat-label>
