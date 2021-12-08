@@ -202,12 +202,14 @@ public postData(sendData){
     formData.append('name', name);
     formData.append('comments', comment);
     formData.append('savedump', JSON.stringify(form));
+    formData.append('scenario_type', "pricing");
     if(yearly){
       formData.append('is_yearly', yearly);
     }
     // formData.append('password', credentials.password);
+    //api/scenario/savescenario/
     return this.http.post(
-       environment.baseUrl+ '/api/scenario/savedscenario/',
+       environment.baseUrl+ '/api/scenario/v1-savescenario/',
       formData
     );
   }
@@ -215,7 +217,7 @@ public postData(sendData){
 
   public getScenario(is_yearly='false') {
     // const yearly = 
-    return this.http.get( environment.baseUrl+ `/api/scenario/savedscenario/?yearly=${ is_yearly}`);
+    return this.http.get( environment.baseUrl+ `/api/scenario/v1-savescenario/?yearly=${ is_yearly}`);
   }
   // public getExcel() {
   //   return this.http.get( environment.baseUrl + '/api/scenario/download/', {
@@ -228,6 +230,15 @@ public postData(sendData){
     formData.append('type', type);
     console.log(formData , "formdata")
     return this.http.post( environment.baseUrl + '/api/scenario/downloads/', formData,{
+      responseType: 'blob',
+    });
+  }
+  public getSummaryExcel(data,type) {
+    let formData: FormData = new FormData();
+    formData.append('data', JSON.stringify(data));
+    formData.append('type', type);
+    // console.log(formData , "formdata")
+    return this.http.post( environment.baseUrl + '/api/scenario/summary-downloads/', formData,{
       responseType: 'blob',
     });
   }

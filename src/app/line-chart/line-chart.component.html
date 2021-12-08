@@ -22,7 +22,19 @@
        
     </mat-select>
     </mat-form-field>
+    <span placement="bottom" [ngbTooltip]="tipDown">
+      <i
+      class="fa fa-download"
+      aria-hidden="true"
+      style="cursor: pointer;"
+    (click)="downloadE()"></i>
+    </span>
+  <ng-template #tipDown>
+    Download data   
+
+  </ng-template>
   </div>
+  
 
 <!-- (change)="applyFilter($event)" -->
   <!-- <div class="custom-drop">

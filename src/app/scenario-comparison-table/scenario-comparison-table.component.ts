@@ -65,7 +65,7 @@ export class ScenarioComparisonTableComponent implements OnInit {
     
   ]
   selectComparearr = new Array(5);
-  selectedScenario;
+  selectedScenario = null;
   scenarioArray;
   scenarios;
   is_per = false;

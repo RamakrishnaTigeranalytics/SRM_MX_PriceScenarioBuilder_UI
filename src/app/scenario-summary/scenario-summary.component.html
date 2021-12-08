@@ -103,8 +103,18 @@
         >
           {{op}}
         </mat-radio-button>
-
+        <span placement="bottom" [ngbTooltip]="tipDown">
+          <i
+          class="fa fa-download"
+          aria-hidden="true"
+          style="cursor: pointer;"
+        (click)="downloadE(array.controls.simulated.value.key)"></i>
+        </span>
       </mat-radio-group>
+      <ng-template #tipDown>
+        Download data   
+
+      </ng-template>
       <table
         *ngIf="isSimulate"
         class="table table-bordered table-striped table-hover"

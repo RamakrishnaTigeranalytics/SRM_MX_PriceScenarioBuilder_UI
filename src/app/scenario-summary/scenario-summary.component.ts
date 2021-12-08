@@ -15,6 +15,7 @@ import {
   combineLatest,
   pipe,
 } from 'rxjs';
+import { ExcelServicesService } from '../shared/services/excel.service';
 @Component({
   selector: 'app-scenario-summary',
   templateUrl: './scenario-summary.component.html',
@@ -39,6 +40,8 @@ export class ScenarioSummaryComponent implements OnInit {
   @Input() retailerFilterSubject : Observable<any[]>;
 
   constructor(private priceScenarioService: PriceScenarioService,
+    private api: ApiService,
+    private excel: ExcelServicesService,
     private formBuilder: FormBuilder) {
       this.form = this.formBuilder.group({
         simulatedArray : this.formBuilder.array([])
@@ -153,5 +156,137 @@ option = this.TOTAL_OPTIONS_TONNES
         // debugger
    
    
+  }
+  public downloadE(key){
+     
+    for(var i=0;i<this.form.get('simulatedArray').value.length;i++){
+      if(this.form.get('simulatedArray').value[i].simulated.key==key){
+        var simulatedData = 
+      
+        [{
+            "Corrent Values":{
+                "units":'',
+                "volume_in_tonnes":'',
+                "rsv_w/o_vat":'',
+                "lsv":'',
+                "nsv":'',
+                "te":'',
+                "percentage_lsv":'',
+                "mac":'',
+                "percentage_nsv":'',
+                "customer_margin":'',
+                "percentage_rsv":''
+            }
+        },{
+            "Simulated":{
+                "units":'',
+                "volume_in_tonnes":'',
+                "rsv_w/o_vat":'',
+                "lsv":'',
+                "nsv":'',
+                "te":'',
+                "percentage_lsv":'',
+                "mac":'',
+                "percentage_nsv":'',
+                "customer_margin":'',
+                "percentage_rsv":14
+            }
+        },
+        {
+            "ABS Change":{
+                "units":'',
+                "volume_in_tonnes":'',
+                "rsv_w/o_vat":'',
+                "lsv":'',
+                "nsv":'',
+                "te":'',
+                "percentage_lsv":'',
+                "mac":'',
+                "percentage_nsv":'',
+                "customer_margin":'',
+                "percentage_rsv":''
+            }
+        },
+        {
+            "% Change":{
+                "units":'',
+                "volume_in_tonnes":'',
+                "rsv_w/o_vat":'',
+                
+                "lsv":'',
+              
+                "nsv":'',
+             
+                "te":'',
+                "percentage_lsv":'',
+                "mac":'',
+                "percentage_nsv":'',
+                "customer_margin":'',
+                "percentage_rsv":''
+            }
+        }
+        
+            ]
+        // console.log(key,this.form.get('simulatedArray').value[i].simulated);
+        simulatedData[0]['Corrent Values'].units=this.form.get('simulatedArray').value[i].simulated.current.units;
+        simulatedData[0]['Corrent Values']['volume_in_tonnes']=this.form.get('simulatedArray').value[i].simulated.current.tonnes;
+        simulatedData[0]['Corrent Values']['rsv_w/o_vat']=this.form.get('simulatedArray').value[i].simulated.current.rsv;
+        simulatedData[0]['Corrent Values']['lsv']=this.form.get('simulatedArray').value[i].simulated.current.lsv;
+        simulatedData[0]['Corrent Values']['nsv']=this.form.get('simulatedArray').value[i].simulated.current.nsv;
+        simulatedData[0]['Corrent Values']['te']=this.form.get('simulatedArray').value[i].simulated.current.te;
+        simulatedData[0]['Corrent Values']['percentage_lsv']=this.form.get('simulatedArray').value[i].simulated.current.te_percent_lsv;
+        simulatedData[0]['Corrent Values']['mac']=this.form.get('simulatedArray').value[i].simulated.current.mac;
+        simulatedData[0]['Corrent Values']['percentage_nsv']=this.form.get('simulatedArray').value[i].simulated.current.mac_percent_nsv;
+        simulatedData[0]['Corrent Values']['customer_margin']=this.form.get('simulatedArray').value[i].simulated.current.rp;
+        simulatedData[0]['Corrent Values']['percentage_rsv']=this.form.get('simulatedArray').value[i].simulated.current.rp_percent_rsv;
+        
+
+        simulatedData[1]['Simulated'].units=this.form.get('simulatedArray').value[i].simulated.simulated.units;
+        simulatedData[1]['Simulated']['volume_in_tonnes']=this.form.get('simulatedArray').value[i].simulated.simulated.tonnes;
+        simulatedData[1]['Simulated']['rsv_w/o_vat']=this.form.get('simulatedArray').value[i].simulated.simulated.rsv;
+        simulatedData[1]['Simulated']['lsv']=this.form.get('simulatedArray').value[i].simulated.simulated.lsv;
+        simulatedData[1]['Simulated']['nsv']=this.form.get('simulatedArray').value[i].simulated.simulated.nsv;
+        simulatedData[1]['Simulated']['te']=this.form.get('simulatedArray').value[i].simulated.simulated.te;
+        simulatedData[1]['Simulated']['percentage_lsv']=this.form.get('simulatedArray').value[i].simulated.simulated.te_percent_lsv;
+        simulatedData[1]['Simulated']['mac']=this.form.get('simulatedArray').value[i].simulated.simulated.mac;
+        simulatedData[1]['Simulated']['percentage_nsv']=this.form.get('simulatedArray').value[i].simulated.simulated.mac_percent_nsv;
+        simulatedData[1]['Simulated']['customer_margin']=this.form.get('simulatedArray').value[i].simulated.simulated.rp;
+        simulatedData[1]['Simulated']['percentage_rsv']=this.form.get('simulatedArray').value[i].simulated.simulated.rp_percent_rsv;
+
+
+        simulatedData[2]['ABS Change'].units=this.form.get('simulatedArray').value[i].simulated.absolute_change.units;
+        simulatedData[2]['ABS Change']['volume_in_tonnes']=this.form.get('simulatedArray').value[i].simulated.absolute_change.tonnes;
+        simulatedData[2]['ABS Change']['rsv_w/o_vat']=this.form.get('simulatedArray').value[i].simulated.absolute_change.rsv;
+        simulatedData[2]['ABS Change']['lsv']=this.form.get('simulatedArray').value[i].simulated.absolute_change.lsv;
+        simulatedData[2]['ABS Change']['nsv']=this.form.get('simulatedArray').value[i].simulated.absolute_change.nsv;
+        simulatedData[2]['ABS Change']['te']=this.form.get('simulatedArray').value[i].simulated.absolute_change.te;
+        simulatedData[2]['ABS Change']['percentage_lsv']=this.form.get('simulatedArray').value[i].simulated.absolute_change.te_percent_lsv;
+        simulatedData[2]['ABS Change']['mac']=this.form.get('simulatedArray').value[i].simulated.absolute_change.mac;
+        simulatedData[2]['ABS Change']['percentage_nsv']=this.form.get('simulatedArray').value[i].simulated.absolute_change.mac_percent_nsv;
+        simulatedData[2]['ABS Change']['customer_margin']=this.form.get('simulatedArray').value[i].simulated.absolute_change.rp;
+        simulatedData[2]['ABS Change']['percentage_rsv']=this.form.get('simulatedArray').value[i].simulated.absolute_change.rp_percent_rsv;
+
+
+        simulatedData[3]['% Change'].units=this.form.get('simulatedArray').value[i].simulated.percent_change.units;
+        simulatedData[3]['% Change']['volume_in_tonnes']=this.form.get('simulatedArray').value[i].simulated.percent_change.tonnes;
+        simulatedData[3]['% Change']['rsv_w/o_vat']=this.form.get('simulatedArray').value[i].simulated.percent_change.rsv;
+        simulatedData[3]['% Change']['lsv']=this.form.get('simulatedArray').value[i].simulated.percent_change.lsv;
+        simulatedData[3]['% Change']['nsv']=this.form.get('simulatedArray').value[i].simulated.percent_change.nsv;
+        simulatedData[3]['% Change']['te']=this.form.get('simulatedArray').value[i].simulated.percent_change.te;
+        simulatedData[3]['% Change']['percentage_lsv']=this.form.get('simulatedArray').value[i].simulated.percent_change.te_percent_lsv;
+        simulatedData[3]['% Change']['mac']=this.form.get('simulatedArray').value[i].simulated.percent_change.mac;
+        simulatedData[3]['% Change']['percentage_nsv']=this.form.get('simulatedArray').value[i].simulated.percent_change.mac_percent_nsv;
+        simulatedData[3]['% Change']['customer_margin']=this.form.get('simulatedArray').value[i].simulated.percent_change.rp;
+        simulatedData[3]['% Change']['percentage_rsv']=this.form.get('simulatedArray').value[i].simulated.percent_change.rp_percent_rsv;
+        this.api.getSummaryExcel(simulatedData,"summary").subscribe(data=>{
+          // console.log(data)
+          this.excel.save(data , "input")
+        },
+        err=>{
+          // console.log(err , "error")
+        })
+      }
+    }
+
   }
 }

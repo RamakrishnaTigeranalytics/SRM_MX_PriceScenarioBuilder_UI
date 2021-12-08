@@ -6,8 +6,9 @@
             <label for="sel1">Saved Scenario:</label>
         </div>
         <div class="p-1">
+          
             <select class="form-control select2" id="sel1" [(ngModel)]="selectedScenario">
-                <option value="">Select</option>
+                <option [ngValue]="null" >Select</option>
                 <option *ngFor="let c of scenarioArray" [ngValue]="c.id">
                     {{ c.name }}
                 </option>
