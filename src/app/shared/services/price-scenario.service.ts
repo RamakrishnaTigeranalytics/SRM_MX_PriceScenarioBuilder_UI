@@ -94,7 +94,6 @@ export class PriceScenarioService {
 
       }
       public filterTableData(category , product , retailer,brand ){
-        // debugger
         let units = this.initData.getValue()
        
         

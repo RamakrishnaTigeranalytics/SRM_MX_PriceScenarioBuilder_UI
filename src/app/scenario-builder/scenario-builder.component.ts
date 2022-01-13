@@ -165,9 +165,10 @@ export class ScenarioBuilderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+     var selectedRetailer = '';
     this.retailers.valueChanges.subscribe(data=>{
       // debugger
+      selectedRetailer = data;
       console.log(this.combination , "COMBINATON")
       console.log(data , " RETAILERS ")
     //  let cat =  this.categories.value
@@ -179,14 +180,14 @@ export class ScenarioBuilderComponent implements OnInit {
        this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
        this.filtered_sub_segments.next([...new Set(filtered.map(d=>d.sub_segment))])
        this.filteredCategories.next([...new Set(filtered.map(d=>d.category))])
-      // this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
+      this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
       }
       console.log(this.filteredProducts , " filtered products ")
       console.log(this.filteredCategories , " filtered categories ")
       // console.log()
     })
     this.sub_segments.valueChanges.subscribe(data=>{
-
+      // debugger
       if(data && data.length > 0){
         let filtered = this.combination.filter(d=>data.includes(d.sub_segment))
        this.filteredRetailers.next([...new Set(filtered.map(d=>d.retailer))])
@@ -206,12 +207,18 @@ export class ScenarioBuilderComponent implements OnInit {
       }
     })
     this.brands.valueChanges.subscribe(data=>{
-
+      var productArry = [];
       if(data && data.length > 0){
         let filtered = this.combination.filter(d=>data.includes(d.brand_filter))
+        this.filteredRetailers.next([...new Set(filtered.map(d=>d.retailer))])
        this.filtered_sub_brands.next([...new Set(filtered.map(d=>d.sub_brand))])
-       this.filteredProducts.next([...new Set(filtered.map(d=>d.product_group))])
-       this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
+       for(var i=0; i<filtered.length;i++){
+         if(selectedRetailer[0]==filtered[i].retailer && data ==filtered[i].brand_filter ){
+          productArry.push(filtered[i].product_group);
+         }
+       }
+       this.filteredProducts.next(productArry)
+      //  this.filteredbrands.next([...new Set(filtered.map(d=>d.brand_filter))])
       }
     })
     this.subBrands.valueChanges.subscribe(data=>{
@@ -251,6 +258,9 @@ export class ScenarioBuilderComponent implements OnInit {
             // console.log(d , "cat")
             this.filterCategories();
           });
+          this.brandsFilterCtrl.valueChanges.subscribe((d)=>{
+            this.filterBrands();
+          })
     this.tableData$ = this.priceScenario.getUnits();
     this.tableData$.subscribe((data: NewUnit[]) => {
       // setTimeout(()=>{
@@ -338,6 +348,30 @@ export class ScenarioBuilderComponent implements OnInit {
     // filter the banks
     this.filteredCategories.next(
       this.categories_filter.filter(data => data.toLowerCase().indexOf(search) > -1)
+    );
+
+  }
+
+  private filterBrands(){
+    // console.log(this.retailer_filter)
+    if (!this.brands_filter) {
+      return;
+    }
+
+    // get the search keyword
+    let search = this.brandsFilterCtrl.value;
+    // console.log(this.categoriesFilterCtrl.dirty, "category dirty")
+    // console.log(search , "SEARCH")
+    if (!search) {
+      this.filteredbrands.next(this.brands_filter.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+
+    // filter the banks
+    this.filteredbrands.next(
+      this.brands_filter.filter(data => data.toLowerCase().indexOf(search) > -1)
     );
 
   }

@@ -378,8 +378,8 @@ fg
     data.forEach((element) => {
       if(element.__rowNum__ > 5){
         const obj = Object.values(element)
+        // debugger
         form.controls.find(d=>d.get('product_group').value == obj[0]).patchValue({
-
           base_price_elasticity : Number(obj[3])
         })
 
@@ -772,6 +772,7 @@ inc_per = Number(value)
       val = input.controls.net_elasticity.value
     }
     else{
+      debugger
       val = input.controls.base_price_elasticity_manual.value
     }
     
@@ -800,15 +801,19 @@ inc_per = Number(value)
     let weight = {
 
     }
+    var basePriceElacity = 0;
     units.forEach((data) => {
       // debugger
       this.minDate = this.minDate > data.date ? data.date : this.minDate
       this.maxDate = this.maxDate < data.date ? data.date : this.maxDate
+      basePriceElacity = data.base_price_elasticity
       let str = data.product_group;
       //  + "-" + data.retailer + "-" + data.category
       if (arr.includes(str)) {
+        // debugger
         let arr2 : FormArray = this.myForm.get('inputFormArray') as FormArray;
         let form = arr2.controls.find((d : FormGroup)=>d.controls.product_group_retailer.value == str)
+        // debugger
         let prev = form.value.base_price_elasticity
         let val_lpi = ( prev+ data.base_price_elasticity)
         // weight[str] = weight[str] + 1
@@ -857,6 +862,7 @@ inc_per = Number(value)
           this.simulatorInput.push(obj);
 
           let arr1 : FormArray = this.myForm.get('inputFormArray') as FormArray;
+          
           arr1.push(this.getFormGroup(obj));
           // let form =  this.getFormGroup(obj)
           // group[str] = form
@@ -870,8 +876,10 @@ inc_per = Number(value)
     // console.log(this.maxDate , "DATE-MIN MAX")
     // console.log(this.myForm,"FORM ARRAY VALUES myform")
     // console.log(weight , "WEiGHT WEiGHT WEiGHT WEiGHT WEiGHT ")
+    // debugger
     for (const i in weight){
       // console.log(i , "iii")
+      // debugger
       weight[i]['el']  = weight[i]['b*u'] / weight[i]['units']
     }
     // console.log(weight , "WEiGHT WEiGHT WEiGHT WEiGHT WEiGHT ")
@@ -879,15 +887,27 @@ inc_per = Number(value)
     // console.log(form , "FORM ARRAY VALUES")
    for(const obj in weight){
     let ctrl = form.controls.find((d : FormGroup)=>d.controls.product_group_retailer.value == obj)
-    
+      // debugger
     // let weighted_value =  Math.round(((prev/weight[obj])+ Number.EPSILON) * 100) / 100
     let weighted_value =  weight[obj]['el'].toFixed(2)
-    ctrl.patchValue({
+    // debugger
+    // basePriceElacity
+    // if(weighted_value =="NaN"){
+    //   ctrl.patchValue({
      
-      base_price_elasticity:weighted_value,
-      base_price_elasticity_manual:  weighted_value
+    //     base_price_elasticity:basePriceElacity.toFixed(2),
+    //     base_price_elasticity_manual:  basePriceElacity.toFixed(2)
+  
+    //   })
+    // }else{
+      ctrl.patchValue({
+     
+        base_price_elasticity:weighted_value,
+        base_price_elasticity_manual:  weighted_value
+  
+      })
+   // }
 
-    })
 
    }
     // 
@@ -1355,7 +1375,7 @@ product_group.forEach((key, i) => result[key] = values[i]);
     // })
     let val = 0 
     //  debugger
-     alert("hai")
+    //  alert("hai")
     if(event.target.value == "Follows"){
       val = input.controls.net_elasticity.value
     }
